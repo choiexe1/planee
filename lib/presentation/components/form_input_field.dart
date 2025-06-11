@@ -3,9 +3,9 @@ import 'package:planee/presentation/widgets/input_field.dart';
 
 class FormInputField extends StatelessWidget {
   const FormInputField({
-    super.key,
     required this.label,
     required this.controller,
+    super.key,
   });
 
   final Text label;
