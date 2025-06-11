@@ -1,5 +1,4 @@
 import 'package:planee/domain/entities/tag_entity.dart';
-import 'package:planee/domain/none.dart';
 
 class EventEntity {
   const EventEntity({
@@ -20,7 +19,7 @@ class EventEntity {
   String toString() {
     return '''
     EventEntity{id: $id, title: $title, description: $description,
-    eventTime: $eventTime}
+    eventTime: $eventTime, createdAt: $createdAt}
     ''';
   }
 
@@ -51,9 +50,6 @@ class EventEntity {
     String? description,
     DateTime? eventTime,
     List<TagEntity>? tags,
-    None? notificationTime,
-    None? location,
-    None? repeat,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
