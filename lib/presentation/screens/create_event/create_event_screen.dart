@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
-import 'package:planee/data/dto/event_dto.dart';
 import 'package:planee/presentation/components/detail_field.dart';
 import 'package:planee/presentation/widgets/box_icon.dart';
 import 'package:planee/presentation/widgets/input_field.dart';
@@ -15,7 +14,8 @@ class CreateEventScreen extends StatelessWidget {
     super.key,
   });
 
-  final void Function(EventDTO dto) onTapSave;
+  final void Function({required String title, required String description})
+  onTapSave;
   final TextEditingController titleController;
   final TextEditingController descriptionController;
 
@@ -142,10 +142,8 @@ class CreateEventScreen extends StatelessWidget {
                   ),
                   onTap: () {
                     onTapSave(
-                      EventDTO(
-                        title: titleController.text,
-                        description: descriptionController.text,
-                      ),
+                      title: titleController.text,
+                      description: descriptionController.text,
                     );
                   },
                 ),
