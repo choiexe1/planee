@@ -21,7 +21,11 @@ class LocalEventRepository implements EventRepository {
   }
 
   @override
-  Future<void> create(EventDTO dto) async {
+  Future<void> create(
+    String title,
+    String description,
+  ) async {
+    final dto = EventDTO(title: title, description: description);
     await _dataSource.create(dto);
   }
 }
