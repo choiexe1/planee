@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:planee/data/dto/event_dto.dart';
-import 'package:planee/domain/repositories/event_repository.dart';
+import 'package:planee/domain/use_cases/create_event_use_case.dart';
 
 class CreateEventViewModel with ChangeNotifier {
-  CreateEventViewModel(this._localEventRepository);
+  CreateEventViewModel(this._createEventUseCase);
 
-  final EventRepository _localEventRepository;
+  final CreateEventUseCase _createEventUseCase;
 
-  Future<void> createEvent(EventDTO dto) async {
-    await _localEventRepository.create(dto);
+  Future<void> createEvent(String title, String description) async {
+    await _createEventUseCase.execute(title, description);
   }
 }
