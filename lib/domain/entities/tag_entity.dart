@@ -3,4 +3,11 @@ class TagEntity {
 
   final String name;
   final DateTime createdAt;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'createdAt': createdAt.toIso8601String(),
+    };
+  }
 }
