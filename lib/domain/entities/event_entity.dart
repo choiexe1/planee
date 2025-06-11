@@ -2,36 +2,48 @@ import 'package:planee/domain/entities/tag_entity.dart';
 import 'package:planee/domain/none.dart';
 
 class EventEntity {
-  EventEntity({
+  const EventEntity({
     required this.id,
     required this.title,
     required this.description,
     required this.eventTime,
-    required this.notificationTime,
-    required this.tags,
-    required this.location,
-    required this.repeat,
     required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
   });
 
   final int id;
   final String title;
   final String description;
   final DateTime eventTime;
-  final List<TagEntity> tags;
-  final None notificationTime;
-  final None location;
-  final None repeat;
   final DateTime createdAt;
-  final DateTime updatedAt;
-  final DateTime deletedAt;
 
   @override
   String toString() {
-    return 'EventEntity{id: $id, title: $title, description: $description, eventTime: $eventTime, tags: $tags, notificationTime: $notificationTime, location: $location, repeat: $repeat}';
+    return '''
+    EventEntity{id: $id, title: $title, description: $description,
+    eventTime: $eventTime}
+    ''';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is EventEntity &&
+        other.id == id &&
+        other.title == title &&
+        other.description == description &&
+        other.eventTime == eventTime &&
+        other.createdAt == createdAt;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    title,
+    description,
+    eventTime,
+    createdAt,
+  );
 
   EventEntity copyWith({
     int? id,
@@ -51,13 +63,17 @@ class EventEntity {
       title: title ?? this.title,
       description: description ?? this.description,
       eventTime: eventTime ?? this.eventTime,
-      tags: tags ?? this.tags,
-      notificationTime: notificationTime ?? this.notificationTime,
-      location: location ?? this.location,
-      repeat: repeat ?? this.repeat,
       createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      deletedAt: deletedAt ?? this.deletedAt,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'eventTime': eventTime.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+    };
   }
 }
