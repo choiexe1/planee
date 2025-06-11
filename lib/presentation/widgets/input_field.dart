@@ -3,10 +3,10 @@ import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
 
 class InputField extends StatelessWidget {
+  const InputField({required this.controller, super.key, this.maxLines = 1});
+
   final TextEditingController controller;
   final int maxLines;
-
-  const InputField({super.key, required this.controller, this.maxLines = 1});
 
   @override
   Widget build(BuildContext context) {
