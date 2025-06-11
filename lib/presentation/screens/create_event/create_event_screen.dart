@@ -7,7 +7,9 @@ import 'package:planee/presentation/widgets/input_field.dart';
 import 'package:planee/presentation/widgets/tap_button.dart';
 
 class CreateEventScreen extends StatelessWidget {
-  const CreateEventScreen({super.key});
+  const CreateEventScreen({required this.onTapSave, super.key});
+
+  final VoidCallback onTapSave;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +132,7 @@ class CreateEventScreen extends StatelessWidget {
                       color: AppColor.white,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: onTapSave,
                 ),
               ],
             ),
