@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:planee/presentation/screens/create_event/create_event_screen.dart';
+import 'package:planee/core/router/router.dart';
 
 void main() {
-  runApp(const AppRouter());
-}
-
-class AppRouter extends StatelessWidget {
-  const AppRouter({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(title: 'Planee', home: App());
-  }
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
@@ -19,6 +10,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CreateEventScreen();
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: appRouter,
+    );
   }
 }
