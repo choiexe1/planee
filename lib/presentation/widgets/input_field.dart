@@ -3,9 +3,10 @@ import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
 
 class InputField extends StatelessWidget {
-  const InputField({super.key, required this.controller});
-
   final TextEditingController controller;
+  final int maxLines;
+
+  const InputField({super.key, required this.controller, this.maxLines = 1});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,8 @@ class InputField extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
       ),
-      style: AppTextStyle.subTitle1.copyWith(color: AppColor.black),
+      maxLines: maxLines,
+      style: AppTextStyle.body.copyWith(color: AppColor.black),
     );
   }
 }
