@@ -2,18 +2,6 @@ import 'package:planee/domain/entities/tag_entity.dart';
 import 'package:planee/domain/none.dart';
 
 class EventEntity {
-  final int id;
-  final String title;
-  final String description;
-  final DateTime eventTime;
-  final List<TagEntity> tags;
-  final None notificationTime;
-  final None location;
-  final None repeat;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final DateTime deletedAt;
-
   EventEntity({
     required this.id,
     required this.title,
@@ -27,6 +15,18 @@ class EventEntity {
     required this.updatedAt,
     required this.deletedAt,
   });
+
+  final int id;
+  final String title;
+  final String description;
+  final DateTime eventTime;
+  final List<TagEntity> tags;
+  final None notificationTime;
+  final None location;
+  final None repeat;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime deletedAt;
 
   @override
   String toString() {
