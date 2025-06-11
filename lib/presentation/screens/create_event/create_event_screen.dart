@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
+import 'package:planee/data/dto/event_dto.dart';
 import 'package:planee/presentation/components/detail_field.dart';
 import 'package:planee/presentation/widgets/box_icon.dart';
 import 'package:planee/presentation/widgets/input_field.dart';
 import 'package:planee/presentation/widgets/tap_button.dart';
 
 class CreateEventScreen extends StatelessWidget {
-  const CreateEventScreen({required this.onTapSave, super.key});
+  const CreateEventScreen({
+    required this.onTapSave,
+    required this.titleController,
+    required this.descriptionController,
+    super.key,
+  });
 
-  final VoidCallback onTapSave;
+  final void Function(EventDTO dto) onTapSave;
+  final TextEditingController titleController;
+  final TextEditingController descriptionController;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +46,7 @@ class CreateEventScreen extends StatelessWidget {
                   ),
                   children: [
                     Expanded(
-                      child: InputField(controller: TextEditingController()),
+                      child: InputField(controller: titleController),
                     ),
                   ],
                 ),
@@ -53,7 +61,7 @@ class CreateEventScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: InputField(
-                        controller: TextEditingController(),
+                        controller: descriptionController,
                         maxLines: 4,
                       ),
                     ),
@@ -132,7 +140,14 @@ class CreateEventScreen extends StatelessWidget {
                       color: AppColor.white,
                     ),
                   ),
-                  onTap: onTapSave,
+                  onTap: () {
+                    onTapSave(
+                      EventDTO(
+                        title: titleController.text,
+                        description: descriptionController.text,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
