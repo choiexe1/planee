@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
+import 'package:planee/presentation/components/detail_field.dart';
 import 'package:planee/presentation/components/form_input_field.dart';
 import 'package:planee/presentation/widgets/app_check_box.dart';
 import 'package:planee/presentation/widgets/box_icon.dart';
@@ -32,16 +34,39 @@ class App extends StatelessWidget {
             children: [
               AppCheckbox(),
               BoxIcon(icon: Icon(Icons.timer_sharp)),
-              Center(
-                child: FormInputField(
-                  label: Text(
-                    '제목',
-                    style: AppTextStyle.subTitle1.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+              FormInputField(
+                label: Text(
+                  '제목',
+                  style: AppTextStyle.subTitle1.copyWith(
+                    fontWeight: FontWeight.w700,
                   ),
-                  controller: TextEditingController(),
                 ),
+                controller: TextEditingController(),
+              ),
+
+              DetailField.detailed(
+                title: Text(
+                  '시간',
+                  style: AppTextStyle.subTitle1.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                icon: Icon(Icons.timer_sharp),
+                description: Text('오늘, 6월 11일', style: AppTextStyle.body),
+                description2: Text(
+                  '10:00 - 12:00',
+                  style: AppTextStyle.caption.copyWith(color: AppColor.grey),
+                ),
+              ),
+              DetailField.simple(
+                title: Text(
+                  '알람',
+                  style: AppTextStyle.subTitle1.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                icon: Icon(Icons.notifications_outlined),
+                description: Text('15분 전 알람', style: AppTextStyle.body),
               ),
             ],
           ),
