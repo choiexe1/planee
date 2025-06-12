@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:planee/core/router/routes.dart';
 import 'package:planee/presentation/screens/home/home_action.dart';
 import 'package:planee/presentation/screens/home/home_screen.dart';
 import 'package:planee/presentation/view_models/home_view_model.dart';
@@ -34,6 +36,8 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
                 widget.viewModel.onAction(action);
               case OnTapDate():
                 widget.viewModel.onAction(action);
+              case OnLongPressDate(:final DateTime date):
+                context.push(Routes.createEventWithDate(date));
             }
           },
         );
