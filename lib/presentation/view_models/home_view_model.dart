@@ -20,6 +20,8 @@ class HomeViewModel with ChangeNotifier {
         _next();
       case OnTapDate(:final DateTime date):
         _select(date);
+      case OnLongPressDate():
+        throw UnimplementedError();
     }
   }
 
