@@ -17,10 +17,8 @@ GoRouter appRouter = GoRouter(
     GoRoute(
       path: Routes.createEvent,
       builder: (BuildContext context, GoRouterState state) {
-        final String? dateString = state.pathParameters['date'];
-        final DateTime date = DateTime.parse(dateString!);
-
-        print(date);
+        final String dateString = state.pathParameters['date']!;
+        final DateTime date = DateTime.parse(dateString);
 
         return CreateEventScreenRoot(viewModel: sl(), date: date);
       },

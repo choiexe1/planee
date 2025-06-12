@@ -30,7 +30,7 @@ void injection() {
     ..registerFactory<CreateEventViewModel>(
       () => CreateEventViewModel(sl()),
     )
-    ..registerFactory<HomeViewModel>(
+    ..registerLazySingleton<HomeViewModel>(
       HomeViewModel.new,
     );
 }
