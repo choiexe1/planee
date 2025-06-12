@@ -6,6 +6,7 @@ import 'package:planee/domain/data_sources/event_data_source.dart';
 import 'package:planee/domain/repositories/event_repository.dart';
 import 'package:planee/domain/use_cases/create_event_use_case.dart';
 import 'package:planee/presentation/view_models/create_event_view_model.dart';
+import 'package:planee/presentation/view_models/home_view_model.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 GetIt sl = GetIt.instance;
@@ -26,7 +27,10 @@ void injection() {
     // Use Cases
     ..registerLazySingleton<CreateEventUseCase>(() => CreateEventUseCase(sl()))
     // View Models
-    ..registerLazySingleton<CreateEventViewModel>(
+    ..registerFactory<CreateEventViewModel>(
       () => CreateEventViewModel(sl()),
+    )
+    ..registerFactory<HomeViewModel>(
+      HomeViewModel.new,
     );
 }
