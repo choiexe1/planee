@@ -4,9 +4,14 @@ import 'package:planee/presentation/screens/create_event/create_event_screen.dar
 import 'package:planee/presentation/view_models/create_event_view_model.dart';
 
 class CreateEventScreenRoot extends StatefulWidget {
-  const CreateEventScreenRoot({required this.viewModel, super.key});
+  const CreateEventScreenRoot({
+    required this.viewModel,
+    required this.date,
+    super.key,
+  });
 
   final CreateEventViewModel viewModel;
+  final DateTime date;
 
   @override
   State<StatefulWidget> createState() => _CreateEventScreenRootState();
@@ -29,6 +34,7 @@ class _CreateEventScreenRootState extends State<CreateEventScreenRoot> {
       listenable: widget.viewModel,
       builder: (BuildContext context, Widget? child) {
         return CreateEventScreen(
+          date: widget.date,
           onAction: (CreateEventAction action) async {
             switch (action) {
               case SaveEvent():

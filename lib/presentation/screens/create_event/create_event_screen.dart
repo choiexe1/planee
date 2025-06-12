@@ -12,10 +12,12 @@ class CreateEventScreen extends StatelessWidget {
     required this.titleController,
     required this.descriptionController,
     required this.onAction,
+    required this.date,
     super.key,
   });
 
   final void Function(CreateEventAction action) onAction;
+  final DateTime date;
   final TextEditingController titleController;
   final TextEditingController descriptionController;
 
