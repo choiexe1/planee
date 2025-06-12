@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:planee/presentation/components/calendar.dart';
+import 'package:planee/presentation/screens/home/home_action.dart';
+import 'package:planee/presentation/screens/home/home_state.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({required this.state, required this.onAction, super.key});
+
+  final HomeState state;
+  final void Function(HomeAction action) onAction;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,17 @@ class HomeScreen extends StatelessWidget {
               children: [
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.5,
-                  child: Calendar(dateTime: DateTime.now()),
+                  child: Calendar(
+                    currentDisplayMonth:
+                        state.currentDisplayMonth ?? DateTime.now(),
+                    dates: state.calendar ?? [],
+                    selectedDate: state.selectedDate ?? DateTime.now(),
+                    onTapPrevious: () =>
+                        onAction(const HomeAction.onTapPrevious()),
+                    onTapNext: () => onAction(const HomeAction.onTapNext()),
+                    onTapDate: (DateTime date) =>
+                        onAction(HomeAction.onTapDate(date)),
+                  ),
                 ),
               ],
             ),
