@@ -38,6 +38,7 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
                 widget.viewModel.onAction(action);
               case OnLongPressDate(:final DateTime date):
                 context.push(Routes.createEventWithDate(date));
+                widget.viewModel.onAction(action);
             }
           },
         );
