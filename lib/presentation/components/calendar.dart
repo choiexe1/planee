@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
 import 'package:planee/domain/extension/date_time_extension.dart';
@@ -153,7 +154,10 @@ class Calendar extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => onTapDate(date),
-      onLongPress: () => onLongPressDate(date),
+      onLongPress: () {
+        HapticFeedback.vibrate();
+        onLongPressDate(date);
+      },
       child: Container(
         alignment: Alignment.center,
         decoration: decoration,
