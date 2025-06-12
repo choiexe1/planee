@@ -1,9 +1,7 @@
 extension DateTimeExtension on DateTime {
-  String toKor() {
-    return '$year년 $month월 $day일';
-  }
+  String get toKor => '$year년 $month월 $day일';
 
-  String toEng() {
+  String get toEng {
     final monthNames = [
       'January',
       'February',
