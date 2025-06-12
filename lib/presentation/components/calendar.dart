@@ -10,6 +10,7 @@ class Calendar extends StatelessWidget {
     required this.onTapPrevious,
     required this.onTapNext,
     required this.onTapDate,
+    required this.onLongPressDate,
     required this.currentDisplayMonth,
     super.key,
   });
@@ -21,6 +22,7 @@ class Calendar extends StatelessWidget {
   final List<DateTime> dates;
   final VoidCallback onTapPrevious;
   final VoidCallback onTapNext;
+  final void Function(DateTime date) onLongPressDate;
   final void Function(DateTime date) onTapDate;
 
   @override
@@ -151,6 +153,7 @@ class Calendar extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => onTapDate(date),
+      onLongPress: () => onLongPressDate(date),
       child: Container(
         alignment: Alignment.center,
         decoration: decoration,
