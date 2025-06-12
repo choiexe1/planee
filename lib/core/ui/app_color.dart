@@ -7,4 +7,5 @@ abstract class AppColor {
   static const Color input = Color(0xFFF0F2F5);
   static const Color grey = Color(0xFF8C8C8C);
   static const Color caption = Color(0xFF121212);
+  static const Color red = Color(0xFFEB2424);
 }
