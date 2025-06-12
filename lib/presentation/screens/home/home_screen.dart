@@ -30,6 +30,8 @@ class HomeScreen extends StatelessWidget {
                     onTapNext: () => onAction(const HomeAction.onTapNext()),
                     onTapDate: (DateTime date) =>
                         onAction(HomeAction.onTapDate(date)),
+                    onLongPressDate: (DateTime date) =>
+                        onAction(HomeAction.onLongPressDate(date)),
                   ),
                 ),
               ],
