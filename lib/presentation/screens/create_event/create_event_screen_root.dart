@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planee/presentation/screens/create_event/create_event_action.dart';
 import 'package:planee/presentation/screens/create_event/create_event_screen.dart';
 import 'package:planee/presentation/view_models/create_event_view_model.dart';
 
@@ -24,12 +25,20 @@ class _CreateEventScreenRootState extends State<CreateEventScreenRoot> {
 
   @override
   Widget build(BuildContext context) {
-    return CreateEventScreen(
-      onTapSave: ({required String title, required String description}) {
-        widget.viewModel.createEvent(title, description);
+    return ListenableBuilder(
+      listenable: widget.viewModel,
+      builder: (BuildContext context, Widget? child) {
+        return CreateEventScreen(
+          onAction: (CreateEventAction action) async {
+            switch (action) {
+              case SaveEvent():
+                await widget.viewModel.onAction(action);
+            }
+          },
+          titleController: titleController,
+          descriptionController: descriptionController,
+        );
       },
-      titleController: titleController,
-      descriptionController: descriptionController,
     );
   }
 }
