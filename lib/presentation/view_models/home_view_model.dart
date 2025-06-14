@@ -18,10 +18,12 @@ class HomeViewModel with ChangeNotifier {
         _previous();
       case OnTapNext():
         _next();
-      case OnTapDate(:final DateTime date):
-        _select(date);
-      case OnLongPressDate(:final DateTime date):
-        _select(date);
+      case OnTapDate(:final DateTime dateTime):
+        _select(dateTime);
+      case OnLongPressDate(:final DateTime dateTime):
+        _select(dateTime);
+      case OnTapTitle():
+        throw UnimplementedError();
     }
   }
 

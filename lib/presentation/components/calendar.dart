@@ -13,6 +13,7 @@ class Calendar extends StatelessWidget {
     required this.onTapDate,
     required this.onLongPressDate,
     required this.currentDisplayMonth,
+    required this.onTapTitle,
     super.key,
   });
 
@@ -23,8 +24,9 @@ class Calendar extends StatelessWidget {
   final List<DateTime> dates;
   final VoidCallback onTapPrevious;
   final VoidCallback onTapNext;
-  final void Function(DateTime date) onLongPressDate;
-  final void Function(DateTime date) onTapDate;
+  final void Function(DateTime dateTime) onLongPressDate;
+  final void Function(DateTime dateTime) onTapDate;
+  final void Function(DateTime dateTime) onTapTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +42,26 @@ class Calendar extends StatelessWidget {
                 onTap: onTapPrevious,
                 child: const Icon(Icons.keyboard_arrow_left, size: 24),
               ),
-              Column(
-                children: [
-                  Text(
-                    currentDisplayMonth.toKor,
-                    style: AppTextStyle.subTitle1.copyWith(
-                      fontWeight: FontWeight.w700,
+              GestureDetector(
+                onTap: () {
+                  onTapTitle(DateTime.now());
+                },
+                child: Column(
+                  children: [
+                    Text(
+                      currentDisplayMonth.toKor,
+                      style: AppTextStyle.subTitle1.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                  ),
-                  Text(
-                    currentDisplayMonth.toEng,
-                    style: AppTextStyle.subTitle2.copyWith(
-                      color: AppColor.grey,
+                    Text(
+                      currentDisplayMonth.toEng,
+                      style: AppTextStyle.subTitle2.copyWith(
+                        color: AppColor.grey,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
