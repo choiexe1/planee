@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
 import 'package:planee/domain/extension/date_time_extension.dart';
+import 'package:planee/presentation/widgets/custom_date_time_picker.dart';
 
 class Calendar extends StatelessWidget {
   const Calendar({
@@ -43,8 +44,82 @@ class Calendar extends StatelessWidget {
                 child: const Icon(Icons.keyboard_arrow_left, size: 24),
               ),
               GestureDetector(
-                onTap: () {
-                  onTapTitle(DateTime.now());
+                onTap: () async {
+                  await HapticFeedback.vibrate();
+                  if (!context.mounted) return;
+
+                  DateTime tempSelectedDateTime = DateTime.now();
+
+                  final DateTime? selectedDt =
+                      await showModalBottomSheet<DateTime>(
+                        context: context,
+                        builder: (BuildContext builderContext) {
+                          return SizedBox(
+                            height:
+                                MediaQuery.of(builderContext).size.height / 2.5,
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 8,
+                                  ),
+                                  alignment: Alignment.centerRight,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(
+                                        builderContext,
+                                        tempSelectedDateTime,
+                                      );
+                                    },
+                                    child: Text(
+                                      '완료',
+                                      style: AppTextStyle.subTitle2.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColor.blue,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: StatefulBuilder(
+                                    builder:
+                                        (
+                                          BuildContext innerContext,
+                                          StateSetter innerSetState,
+                                        ) {
+                                          return CustomDatePicker(
+                                            initialDate: DateTime(
+                                              selectedDate.year,
+                                              selectedDate.month,
+                                            ),
+                                            firstDate: DateTime(
+                                              selectedDate.year - 5,
+                                            ),
+                                            lastDate: DateTime(
+                                              selectedDate.year + 5,
+                                              12,
+                                              31,
+                                            ),
+                                            onDateTimeChanged: (DateTime dt) {
+                                              innerSetState(
+                                                () => tempSelectedDateTime = dt,
+                                              );
+                                              tempSelectedDateTime = dt;
+                                            },
+                                          );
+                                        },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+
+                  if (selectedDt != null) {
+                    onTapTitle(selectedDt);
+                  }
                 },
                 child: Column(
                   children: [
