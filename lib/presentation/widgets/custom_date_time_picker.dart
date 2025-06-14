@@ -91,8 +91,10 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         SizedBox(
           height: 250,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
+              SizedBox(
+                width: 100,
                 child: ListWheelScrollView.useDelegate(
                   controller: _yearController,
                   itemExtent: 40,
@@ -124,7 +126,9 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                   ),
                 ),
               ),
-              Expanded(
+              const SizedBox(width: 40),
+              SizedBox(
+                width: 80,
                 child: ListWheelScrollView.useDelegate(
                   controller: _monthController,
                   itemExtent: 40,
