@@ -25,7 +25,8 @@ class HomeScreen extends StatelessWidget {
                         state.currentDisplayMonth ?? DateTime.now(),
                     dates: state.calendar ?? [],
                     selectedDate: state.selectedDate ?? DateTime.now(),
-                    onTapTitle: (DateTime dateTime) {},
+                    onTapTitle: (DateTime dateTime) =>
+                        onAction(HomeAction.onTapTitle(dateTime)),
                     onTapPrevious: () =>
                         onAction(const HomeAction.onTapPrevious()),
                     onTapNext: () => onAction(const HomeAction.onTapNext()),

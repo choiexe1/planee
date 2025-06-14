@@ -22,8 +22,8 @@ class HomeViewModel with ChangeNotifier {
         _select(dateTime);
       case OnLongPressDate(:final DateTime dateTime):
         _select(dateTime);
-      case OnTapTitle():
-        throw UnimplementedError();
+      case OnTapTitle(:final DateTime dateTime):
+        _select(dateTime);
     }
   }
 
