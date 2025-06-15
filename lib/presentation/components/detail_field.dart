@@ -26,6 +26,7 @@ class DetailField extends StatelessWidget {
             if (editable) ...[
               const SizedBox(width: 8),
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   onTapEdit?.call();
                 },
