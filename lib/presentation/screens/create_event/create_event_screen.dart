@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
+import 'package:planee/domain/extension/date_time_extension.dart';
 import 'package:planee/presentation/components/detail_field.dart';
+import 'package:planee/presentation/components/time_picker.dart';
 import 'package:planee/presentation/screens/create_event/create_event_action.dart';
+import 'package:planee/presentation/screens/create_event/create_event_state.dart';
 import 'package:planee/presentation/widgets/box_icon.dart';
 import 'package:planee/presentation/widgets/input_field.dart';
 import 'package:planee/presentation/widgets/tap_button.dart';
 
 class CreateEventScreen extends StatelessWidget {
   const CreateEventScreen({
+    required this.state,
     required this.titleController,
     required this.descriptionController,
     required this.onAction,
@@ -17,6 +21,7 @@ class CreateEventScreen extends StatelessWidget {
     super.key,
   });
 
+  final CreateEventState state;
   final void Function(CreateEventAction action) onAction;
   final DateTime date;
   final TextEditingController titleController;
@@ -81,15 +86,78 @@ class CreateEventScreen extends StatelessWidget {
                     ),
                   ),
                   editable: true,
+                  onTapEdit: () async {
+                    TimeOfDay timeOfDay = state.timeOfDay;
+                    final TimeOfDay? newTime = await showDialog<TimeOfDay>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text(
+                            '시간 선택',
+                          ),
+                          content: SizedBox(
+                            height: 200,
+                            child: TimePicker(
+                              initialTime: timeOfDay,
+                              onTimeChanged: (TimeOfDay tod) {
+                                timeOfDay = tod;
+                              },
+                            ),
+                          ),
+                          actions: [
+                            TapButton(
+                              name: Text(
+                                '완료',
+                                style: AppTextStyle.body.copyWith(
+                                  color: AppColor.white,
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context, timeOfDay);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    if (newTime != null) {
+                      onAction(
+                        CreateEventAction.changeTime(timeOfDay: newTime),
+                      );
+                    }
+                  },
                   children: [
                     const BoxIcon(icon: Icon(Icons.timer_sharp)),
                     const SizedBox(width: 12),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('오늘, 6월 11일', style: AppTextStyle.body),
+                        RichText(
+                          text: TextSpan(
+                            style: AppTextStyle.body,
+                            children: [
+                              TextSpan(
+                                text: date.dateString,
+                                style: AppTextStyle.body.copyWith(
+                                  color: AppColor.black,
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' (${date.weekDayAsKorean})',
+                                style: AppTextStyle.body.copyWith(
+                                  color: date.isSaturday
+                                      ? AppColor.blue
+                                      : date.isSunday
+                                      ? AppColor.red
+                                      : AppColor.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         Text(
-                          '10:00 - 14:00',
+                          state.timeOfDay.format(context),
                           style: AppTextStyle.caption.copyWith(
                             color: AppColor.grey,
                           ),
