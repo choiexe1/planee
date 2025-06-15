@@ -21,12 +21,28 @@ class CreateEventViewModel with ChangeNotifier {
     }
   }
 
+  void init(DateTime dateTime) {
+    _state = _state.copyWith(eventTime: dateTime);
+  }
+
   Future<void> _createEvent(String title, String description) async {
     await _createEventUseCase.execute(title, description);
   }
 
   Future<void> _changeTime(TimeOfDay timeOfDay) async {
-    _state = _state.copyWith(timeOfDay: timeOfDay);
+    final eventTime = _state.eventTime!;
+
+    _state = _state.copyWith(
+      timeOfDay: timeOfDay,
+      eventTime: DateTime(
+        eventTime.year,
+        eventTime.month,
+        eventTime.day,
+        timeOfDay.hour,
+        timeOfDay.minute,
+      ),
+    );
+
     notifyListeners();
   }
 }

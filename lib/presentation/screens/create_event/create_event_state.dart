@@ -7,6 +7,7 @@ part 'create_event_state.freezed.dart';
 abstract class CreateEventState with _$CreateEventState {
   const factory CreateEventState({
     @Default(false) bool isLoading,
+    @Default(null) DateTime? eventTime,
     @Default(TimeOfDay(hour: 0, minute: 0)) TimeOfDay timeOfDay,
   }) = _CreateEventState;
 }
