@@ -34,10 +34,13 @@ class _CreateEventScreenRootState extends State<CreateEventScreenRoot> {
       listenable: widget.viewModel,
       builder: (BuildContext context, Widget? child) {
         return CreateEventScreen(
+          state: widget.viewModel.state,
           date: widget.date,
           onAction: (CreateEventAction action) async {
             switch (action) {
               case SaveEvent():
+                await widget.viewModel.onAction(action);
+              case ChangeTime():
                 await widget.viewModel.onAction(action);
             }
           },
