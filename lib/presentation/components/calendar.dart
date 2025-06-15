@@ -88,7 +88,7 @@ class Calendar extends StatelessWidget {
                                           BuildContext innerContext,
                                           StateSetter innerSetState,
                                         ) {
-                                          return CustomDatePicker(
+                                          return YearMonthPicker(
                                             initialDate: DateTime(
                                               selectedDate.year,
                                               selectedDate.month,

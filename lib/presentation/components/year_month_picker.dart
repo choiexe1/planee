@@ -3,8 +3,8 @@ import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
 import 'package:planee/presentation/widgets/scrollable_picker.dart';
 
-class CustomDatePicker extends StatefulWidget {
-  const CustomDatePicker({
+class YearMonthPicker extends StatefulWidget {
+  const YearMonthPicker({
     required this.initialDate,
     required this.firstDate,
     required this.lastDate,
@@ -18,10 +18,10 @@ class CustomDatePicker extends StatefulWidget {
   final ValueChanged<DateTime> onDateTimeChanged;
 
   @override
-  State<CustomDatePicker> createState() => _CustomDatePickerState();
+  State<YearMonthPicker> createState() => _YearMonthPickerState();
 }
 
-class _CustomDatePickerState extends State<CustomDatePicker> {
+class _YearMonthPickerState extends State<YearMonthPicker> {
   late FixedExtentScrollController _yearController;
   late FixedExtentScrollController _monthController;
 
