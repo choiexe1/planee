@@ -4,6 +4,7 @@ import 'package:planee/core/router/routes.dart';
 import 'package:planee/core/service_locator.dart';
 import 'package:planee/presentation/screens/create_event/create_event_screen_root.dart';
 import 'package:planee/presentation/screens/home/home_screen_root.dart';
+import 'package:planee/presentation/view_models/create_event_view_model.dart';
 
 GoRouter appRouter = GoRouter(
   initialLocation: Routes.home,
@@ -20,7 +21,9 @@ GoRouter appRouter = GoRouter(
         final String dateString = state.pathParameters['date']!;
         final DateTime date = DateTime.parse(dateString);
 
-        return CreateEventScreenRoot(viewModel: sl(), date: date);
+        final CreateEventViewModel viewModel = sl()..init(date);
+
+        return CreateEventScreenRoot(viewModel: viewModel, date: date);
       },
     ),
   ],
