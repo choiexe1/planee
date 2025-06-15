@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'create_event_action.freezed.dart';
@@ -8,4 +9,8 @@ sealed class CreateEventAction with _$CreateEventAction {
     required String title,
     required String description,
   }) = SaveEvent;
+
+  const factory CreateEventAction.changeTime({
+    required TimeOfDay timeOfDay,
+  }) = ChangeTime;
 }
