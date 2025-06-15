@@ -5,12 +5,14 @@ class DetailField extends StatelessWidget {
     required this.title,
     required this.children,
     super.key,
+    this.onTapEdit,
     this.editable = false,
   });
 
   final Text title;
   final List<Widget> children;
   final bool editable;
+  final VoidCallback? onTapEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,12 @@ class DetailField extends StatelessWidget {
             title,
             if (editable) ...[
               const SizedBox(width: 8),
-              const Icon(Icons.edit, size: 18),
+              GestureDetector(
+                onTap: () {
+                  onTapEdit?.call();
+                },
+                child: const Icon(Icons.edit, size: 18),
+              ),
             ],
           ],
         ),
