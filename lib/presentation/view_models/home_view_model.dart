@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:planee/domain/extension/date_time_extension.dart';
+import 'package:planee/domain/use_cases/find_upcoming_events_use_case.dart';
 import 'package:planee/presentation/screens/home/home_action.dart';
 import 'package:planee/presentation/screens/home/home_state.dart';
 
 class HomeViewModel with ChangeNotifier {
-  HomeViewModel();
+  HomeViewModel(this._findUpcomingEventsUseCase);
 
   static const int calendarPerWeek = 5;
 
   HomeState _state = const HomeState();
+  final FindUpcomingEventsUseCase _findUpcomingEventsUseCase;
 
   HomeState get state => _state;
 
@@ -27,7 +29,7 @@ class HomeViewModel with ChangeNotifier {
     }
   }
 
-  void init() {
+  Future<void> init() async {
     _state = _state.copyWith(isLoading: true);
     notifyListeners();
 
@@ -37,6 +39,10 @@ class HomeViewModel with ChangeNotifier {
       selectedDate: now,
       calendar: now.calculateCalendarDates(5),
       currentDisplayMonth: DateTime(now.year, now.month),
+      upcomingEvents: await _findUpcomingEventsUseCase.execute(
+        DateTime(now.year, now.month, now.day - 1),
+        now,
+      ),
       isLoading: false,
     );
 
