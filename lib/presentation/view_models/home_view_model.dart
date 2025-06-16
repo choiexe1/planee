@@ -40,8 +40,8 @@ class HomeViewModel with ChangeNotifier {
       calendar: now.calculateCalendarDates(5),
       currentDisplayMonth: DateTime(now.year, now.month),
       upcomingEvents: await _findUpcomingEventsUseCase.execute(
-        DateTime(now.year, now.month, now.day - 1),
-        now,
+        now.subtract(),
+        
       ),
       isLoading: false,
     );

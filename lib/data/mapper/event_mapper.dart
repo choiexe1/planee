@@ -7,8 +7,8 @@ extension EventMapper on EventDTO {
       title: title,
       description: description,
       id: id!,
-      eventTime: DateTime.now(),
-      createdAt: DateTime.now(),
+      eventTime: eventTime,
+      createdAt: createdAt,
     );
   }
 }
