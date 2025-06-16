@@ -32,7 +32,7 @@ class CreateEventScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '상세 일정',
+          '일정 추가',
           style: AppTextStyle.subTitle1.copyWith(color: AppColor.black),
         ),
         centerTitle: true,
