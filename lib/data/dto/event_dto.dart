@@ -8,8 +8,9 @@ class EventDTO {
   EventDTO({
     required this.title,
     required this.description,
+    required this.eventTime,
     this.id,
-  });
+  }) : createdAt = DateTime.now();
 
   factory EventDTO.fromJson(Map<String, dynamic> json) =>
       _$EventDTOFromJson(json);
@@ -19,4 +20,6 @@ class EventDTO {
   final int? id;
   final String title;
   final String description;
+  final DateTime eventTime;
+  final DateTime createdAt;
 }
