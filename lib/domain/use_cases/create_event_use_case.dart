@@ -5,7 +5,11 @@ class CreateEventUseCase {
 
   final EventRepository _eventRepository;
 
-  Future<void> execute(String title, String description) async {
-    await _eventRepository.create(title, description);
+  Future<void> execute(
+    String title,
+    String description,
+    DateTime eventTime,
+  ) async {
+    await _eventRepository.create(title, description, eventTime);
   }
 }
