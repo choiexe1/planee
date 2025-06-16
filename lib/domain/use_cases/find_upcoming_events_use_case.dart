@@ -6,7 +6,11 @@ class FindUpcomingEventsUseCase {
 
   final EventRepository _eventRepository;
 
-  Future<List<EventEntity>> execute(DateTime start, DateTime end) {
-    return _eventRepository.findUpcomingEvents(start, end);
+  Future<List<EventEntity>> execute(
+    DateTime start,
+    DateTime end, {
+    int? limit,
+  }) {
+    return _eventRepository.findUpcomingEvents(start, end, limit: limit);
   }
 }
