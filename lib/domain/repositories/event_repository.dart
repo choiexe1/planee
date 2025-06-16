@@ -8,5 +8,6 @@ abstract interface class EventRepository
     DateTime start,
     DateTime end, {
     bool ascending = true,
+    int? limit,
   });
 }

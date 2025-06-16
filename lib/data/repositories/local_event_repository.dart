@@ -39,11 +39,13 @@ class LocalEventRepository implements EventRepository {
     DateTime start,
     DateTime end, {
     bool ascending = true,
+    int? limit,
   }) async {
     final dtos = await _dataSource.findEventsByDateRange(
       start,
       end,
       ascending: ascending,
+      limit: limit,
     );
     return dtos.map((dto) => dto.toEntity()).toList();
   }
