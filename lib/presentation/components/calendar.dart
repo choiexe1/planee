@@ -175,7 +175,8 @@ class Calendar extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Expanded(
+        SizedBox(
+          height: 270,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: GridView.builder(
