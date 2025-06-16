@@ -8,6 +8,9 @@ extension DateTimeExtension on DateTime {
 
   String get dateString => '$year년, $month월 $day일';
 
+  String get dateStringMonthDays =>
+      '''$month월 $day일 ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}''';
+
   String get eventTimeAsString {
     if (hour == 0) {
       return '시간이 지정되지 않았습니다.';
