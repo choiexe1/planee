@@ -5,6 +5,7 @@ import 'package:planee/core/service_locator.dart';
 import 'package:planee/presentation/screens/create_event/create_event_screen_root.dart';
 import 'package:planee/presentation/screens/home/home_screen_root.dart';
 import 'package:planee/presentation/view_models/create_event_view_model.dart';
+import 'package:planee/presentation/view_models/home_view_model.dart';
 
 GoRouter appRouter = GoRouter(
   initialLocation: Routes.home,
@@ -12,7 +13,8 @@ GoRouter appRouter = GoRouter(
     GoRoute(
       path: Routes.home,
       builder: (BuildContext context, GoRouterState state) {
-        return HomeScreenRoot(viewModel: sl());
+        final HomeViewModel viewModel = sl()..init();
+        return HomeScreenRoot(viewModel: viewModel);
       },
     ),
     GoRoute(
