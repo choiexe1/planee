@@ -22,18 +22,18 @@ class _AppCheckboxState extends State<AppCheckbox> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => toggleChecked(),
+      onTap: toggleChecked,
       child: Container(
-        width: 32,
-        height: 32,
+        width: 24,
+        height: 24,
         decoration: BoxDecoration(
-          border: _checked ? null : Border.all(color: Color(0xFF8C8C8C)),
+          border: _checked ? null : Border.all(color: const Color(0xFF8C8C8C)),
           borderRadius: BorderRadius.circular(8),
           color: _checked ? AppColor.blue : Colors.transparent,
         ),
         child: _checked
-            ? Icon(Icons.check, size: 24, color: AppColor.white)
-            : SizedBox(),
+            ? const Icon(Icons.check, size: 24, color: AppColor.white)
+            : const SizedBox(),
       ),
     );
   }
