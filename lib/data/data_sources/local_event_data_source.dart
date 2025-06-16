@@ -22,4 +22,24 @@ class LocalEventDataSource implements EventDataSource {
   Future<void> create(EventDTO dto) async {
     await _db.insert('events', dto.toJson());
   }
+
+  @override
+  Future<List<EventDTO>> findEventsByDateRange(
+    DateTime start,
+    DateTime end, {
+    bool ascending = true,
+  }) async {
+    final String startTimeString = start.toIso8601String();
+    final String endTimeString = end.toIso8601String();
+    final String orderBy = ascending ? 'ASC' : 'DESC';
+
+    final List<Map<String, dynamic>> results = await _db.query(
+      'events',
+      where: 'eventTime >= ? AND eventTime <= ?',
+      whereArgs: [startTimeString, endTimeString],
+      orderBy: 'eventTime $orderBy',
+    );
+
+    return results.map(EventDTO.fromJson).toList();
+  }
 }
