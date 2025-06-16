@@ -6,5 +6,6 @@ abstract interface class EventDataSource implements DataSource<EventDTO, int> {
     DateTime start,
     DateTime end, {
     bool ascending = true,
+    int? limit,
   });
 }

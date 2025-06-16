@@ -28,6 +28,7 @@ class LocalEventDataSource implements EventDataSource {
     DateTime start,
     DateTime end, {
     bool ascending = true,
+    int? limit,
   }) async {
     final String startTimeString = start.toIso8601String();
     final String endTimeString = end.toIso8601String();
@@ -38,6 +39,7 @@ class LocalEventDataSource implements EventDataSource {
       where: 'eventTime >= ? AND eventTime <= ?',
       whereArgs: [startTimeString, endTimeString],
       orderBy: 'eventTime $orderBy',
+      limit: limit,
     );
 
     return results.map(EventDTO.fromJson).toList();
