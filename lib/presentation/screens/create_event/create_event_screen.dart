@@ -87,45 +87,30 @@ class CreateEventScreen extends StatelessWidget {
                   ),
                   editable: true,
                   onTapEdit: () async {
-                    TimeOfDay timeOfDay = state.timeOfDay;
-                    final TimeOfDay? newTime = await showDialog<TimeOfDay>(
+                    await showDialog<TimeOfDay>(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text(
                             '시간 선택',
                           ),
-                          content: SizedBox(
-                            height: 200,
-                            child: TimePicker(
-                              initialTime: timeOfDay,
-                              onTimeChanged: (TimeOfDay tod) {
-                                timeOfDay = tod;
-                              },
+                          content: IntrinsicHeight(
+                            child: IntrinsicWidth(
+                              child: TimePicker(
+                                initialTime: state.timeOfDay,
+                                onTapDone: (TimeOfDay timeOfDay) {
+                                  onAction(
+                                    CreateEventAction.changeTime(
+                                      timeOfDay: timeOfDay,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                          actions: [
-                            TapButton(
-                              name: Text(
-                                '완료',
-                                style: AppTextStyle.body.copyWith(
-                                  color: AppColor.white,
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.pop(context, timeOfDay);
-                              },
-                            ),
-                          ],
                         );
                       },
                     );
-
-                    if (newTime != null) {
-                      onAction(
-                        CreateEventAction.changeTime(timeOfDay: newTime),
-                      );
-                    }
                   },
                   children: [
                     const BoxIcon(icon: Icon(Icons.timer_sharp)),
@@ -222,6 +207,7 @@ class CreateEventScreen extends StatelessWidget {
                         description: descriptionController.text,
                       ),
                     );
+                    context.pop();
                   },
                 ),
               ],
