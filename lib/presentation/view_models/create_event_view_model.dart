@@ -17,7 +17,7 @@ class CreateEventViewModel with ChangeNotifier {
       case SaveEvent(:final String title, :final String description):
         await _createEvent(title, description);
       case ChangeTime(:final TimeOfDay timeOfDay):
-        await _changeTime(timeOfDay);
+        _changeTime(timeOfDay);
     }
   }
 
@@ -25,11 +25,18 @@ class CreateEventViewModel with ChangeNotifier {
     _state = _state.copyWith(eventTime: dateTime);
   }
 
-  Future<void> _createEvent(String title, String description) async {
-    await _createEventUseCase.execute(title, description);
+  Future<void> _createEvent(
+    String title,
+    String description,
+  ) async {
+    _state = _state.copyWith(isLoading: true);
+    notifyListeners();
+
+    await _createEventUseCase.execute(title, description, _state.eventTime!);
+    notifyListeners();
   }
 
-  Future<void> _changeTime(TimeOfDay timeOfDay) async {
+  void _changeTime(TimeOfDay timeOfDay) {
     final eventTime = _state.eventTime!;
 
     _state = _state.copyWith(
