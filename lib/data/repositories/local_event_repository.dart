@@ -24,8 +24,27 @@ class LocalEventRepository implements EventRepository {
   Future<void> create(
     String title,
     String description,
+    DateTime eventTime,
   ) async {
-    final dto = EventDTO(title: title, description: description);
+    final dto = EventDTO(
+      title: title,
+      description: description,
+      eventTime: eventTime,
+    );
     await _dataSource.create(dto);
+  }
+
+  @override
+  Future<List<EventEntity>> findUpcomingEvents(
+    DateTime start,
+    DateTime end, {
+    bool ascending = true,
+  }) async {
+    final dtos = await _dataSource.findEventsByDateRange(
+      start,
+      end,
+      ascending: ascending,
+    );
+    return dtos.map((dto) => dto.toEntity()).toList();
   }
 }
