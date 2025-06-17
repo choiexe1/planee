@@ -10,7 +10,6 @@ import 'package:planee/presentation/components/time_picker.dart';
 import 'package:planee/presentation/screens/create_event/create_event_action.dart';
 import 'package:planee/presentation/screens/create_event/create_event_state.dart';
 import 'package:planee/presentation/widgets/box_icon.dart';
-import 'package:planee/presentation/widgets/input_field.dart';
 
 class CreateEventScreen extends StatelessWidget {
   const CreateEventScreen({
@@ -101,6 +100,107 @@ class CreateEventScreen extends StatelessWidget {
                         return null;
                       },
                     ),
+                    DetailField(
+                      title: Text(
+                        '시간',
+                        style: AppTextStyle.subTitle1.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      editable: true,
+                      onTapEdit: () async {
+                        await showDialog<TimeOfDay>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text(
+                                '시간 선택',
+                              ),
+                              content: IntrinsicHeight(
+                                child: IntrinsicWidth(
+                                  child: TimePicker(
+                                    initialTime: state.timeOfDay,
+                                    onTapDone: (TimeOfDay timeOfDay) {
+                                      onAction(
+                                        CreateEventAction.changeTime(
+                                          timeOfDay: timeOfDay,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      children: [
+                        const BoxIcon(icon: Icon(Icons.timer_sharp)),
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                style: AppTextStyle.body,
+                                children: [
+                                  TextSpan(
+                                    text: date.dateString,
+                                    style: AppTextStyle.body.copyWith(
+                                      color: AppColor.black,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: ' (${date.weekDayAsKorean})',
+                                    style: AppTextStyle.body.copyWith(
+                                      color: date.isSaturday
+                                          ? AppColor.blue
+                                          : date.isSunday
+                                          ? AppColor.red
+                                          : AppColor.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              state.timeOfDay.format(context),
+                              style: AppTextStyle.caption.copyWith(
+                                color: AppColor.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    DetailField(
+                      title: Text(
+                        '알람',
+                        style: AppTextStyle.subTitle1.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      editable: true,
+                      children: const [
+                        BoxIcon(icon: Icon(Icons.notifications_outlined)),
+                        SizedBox(width: 16),
+                        Text('15분 전 알람'),
+                      ],
+                    ),
+                    DetailField(
+                      title: Text(
+                        '반복',
+                        style: AppTextStyle.subTitle1.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      editable: true,
+                      children: const [
+                        BoxIcon(icon: Icon(Icons.repeat_outlined)),
+                        SizedBox(width: 16),
+                        Text('일주일마다 반복'),
+                      ],
+                    ),
                   ],
                   onSubmitted: () {
                     onAction(
@@ -111,120 +211,6 @@ class CreateEventScreen extends StatelessWidget {
                     );
                     context.pop();
                   },
-                ),
-                DetailField(
-                  title: Text(
-                    '시간',
-                    style: AppTextStyle.subTitle1.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  editable: true,
-                  onTapEdit: () async {
-                    await showDialog<TimeOfDay>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text(
-                            '시간 선택',
-                          ),
-                          content: IntrinsicHeight(
-                            child: IntrinsicWidth(
-                              child: TimePicker(
-                                initialTime: state.timeOfDay,
-                                onTapDone: (TimeOfDay timeOfDay) {
-                                  onAction(
-                                    CreateEventAction.changeTime(
-                                      timeOfDay: timeOfDay,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  children: [
-                    const BoxIcon(icon: Icon(Icons.timer_sharp)),
-                    const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            style: AppTextStyle.body,
-                            children: [
-                              TextSpan(
-                                text: date.dateString,
-                                style: AppTextStyle.body.copyWith(
-                                  color: AppColor.black,
-                                ),
-                              ),
-                              TextSpan(
-                                text: ' (${date.weekDayAsKorean})',
-                                style: AppTextStyle.body.copyWith(
-                                  color: date.isSaturday
-                                      ? AppColor.blue
-                                      : date.isSunday
-                                      ? AppColor.red
-                                      : AppColor.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          state.timeOfDay.format(context),
-                          style: AppTextStyle.caption.copyWith(
-                            color: AppColor.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                DetailField(
-                  title: Text(
-                    '알람',
-                    style: AppTextStyle.subTitle1.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  editable: true,
-                  children: const [
-                    BoxIcon(icon: Icon(Icons.notifications_outlined)),
-                    SizedBox(width: 16),
-                    Text('15분 전 알람'),
-                  ],
-                ),
-                DetailField(
-                  title: Text(
-                    '반복',
-                    style: AppTextStyle.subTitle1.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  editable: true,
-                  children: const [
-                    BoxIcon(icon: Icon(Icons.repeat_outlined)),
-                    SizedBox(width: 16),
-                    Text('일주일마다 반복'),
-                  ],
-                ),
-                DetailField(
-                  title: Text(
-                    '장소',
-                    style: AppTextStyle.subTitle1.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  children: [
-                    Expanded(
-                      child: InputField(controller: TextEditingController()),
-                    ),
-                  ],
                 ),
               ],
             ),
