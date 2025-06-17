@@ -20,11 +20,13 @@ class CreateEventScreenRoot extends StatefulWidget {
 class _CreateEventScreenRootState extends State<CreateEventScreenRoot> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
 
   @override
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
+    locationController.dispose();
     super.dispose();
   }
 
@@ -46,6 +48,7 @@ class _CreateEventScreenRootState extends State<CreateEventScreenRoot> {
           },
           titleController: titleController,
           descriptionController: descriptionController,
+          locationController: locationController,
         );
       },
     );

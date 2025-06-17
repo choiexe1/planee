@@ -11,13 +11,13 @@ import 'package:planee/presentation/screens/create_event/create_event_action.dar
 import 'package:planee/presentation/screens/create_event/create_event_state.dart';
 import 'package:planee/presentation/widgets/box_icon.dart';
 import 'package:planee/presentation/widgets/input_field.dart';
-import 'package:planee/presentation/widgets/tap_button.dart';
 
 class CreateEventScreen extends StatelessWidget {
   const CreateEventScreen({
     required this.state,
     required this.titleController,
     required this.descriptionController,
+    required this.locationController,
     required this.onAction,
     required this.date,
     super.key,
@@ -28,6 +28,7 @@ class CreateEventScreen extends StatelessWidget {
   final DateTime date;
   final TextEditingController titleController;
   final TextEditingController descriptionController;
+  final TextEditingController locationController;
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +52,12 @@ class CreateEventScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              spacing: 24,
               children: [
                 AppForm(
-                  spacing: 16,
+                  spacing: 24,
                   fields: [
                     LabeledFormInputField(
+                      controller: titleController,
                       label: Text(
                         '제목',
                         style: AppTextStyle.subTitle1.copyWith(
@@ -73,6 +74,7 @@ class CreateEventScreen extends StatelessWidget {
                       },
                     ),
                     LabeledFormInputField(
+                      controller: descriptionController,
                       maxLines: 4,
                       maxLength: 120,
                       label: Text(
@@ -86,8 +88,29 @@ class CreateEventScreen extends StatelessWidget {
                         return null;
                       },
                     ),
+                    LabeledFormInputField(
+                      controller: locationController,
+                      label: Text(
+                        '장소',
+                        style: AppTextStyle.subTitle1.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      hintText: '일정의 장소를 입력해주세요.',
+                      validator: (String? value) {
+                        return null;
+                      },
+                    ),
                   ],
-                  onSubmitted: () {},
+                  onSubmitted: () {
+                    onAction(
+                      CreateEventAction.saveEvent(
+                        title: titleController.text,
+                        description: descriptionController.text,
+                      ),
+                    );
+                    context.pop();
+                  },
                 ),
                 DetailField(
                   title: Text(
@@ -202,24 +225,6 @@ class CreateEventScreen extends StatelessWidget {
                       child: InputField(controller: TextEditingController()),
                     ),
                   ],
-                ),
-                TapButton(
-                  name: Text(
-                    '저장',
-                    style: AppTextStyle.subTitle2.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: AppColor.white,
-                    ),
-                  ),
-                  onTap: () {
-                    onAction(
-                      CreateEventAction.saveEvent(
-                        title: titleController.text,
-                        description: descriptionController.text,
-                      ),
-                    );
-                    context.pop();
-                  },
                 ),
               ],
             ),
