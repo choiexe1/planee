@@ -57,7 +57,7 @@ class CreateEventScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               AppForm(
-                spacing: 24,
+                spacing: 12,
                 fields: [
                   LabeledFormInputField(
                     controller: titleController,
