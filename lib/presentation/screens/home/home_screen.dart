@@ -18,54 +18,52 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Calendar(
-                  currentDisplayMonth:
-                      state.currentDisplayMonth ?? DateTime.now(),
-                  dates: state.calendar ?? [],
-                  selectedDate: state.selectedDate ?? DateTime.now(),
-                  onTapTitle: (DateTime dateTime) =>
-                      onAction(HomeAction.onTapTitle(dateTime)),
-                  onTapPrevious: () =>
-                      onAction(const HomeAction.onTapPrevious()),
-                  onTapNext: () => onAction(const HomeAction.onTapNext()),
-                  onTapDate: (DateTime dateTime) =>
-                      onAction(HomeAction.onTapDate(dateTime)),
-                  onLongPressDate: (DateTime dateTime) =>
-                      onAction(HomeAction.onLongPressDate(dateTime)),
-                ),
-                DetailField(
-                  title: Text(
-                    '다가오는 일정',
-                    style: AppTextStyle.subTitle1.copyWith(
-                      color: AppColor.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Calendar(
+                currentDisplayMonth:
+                    state.currentDisplayMonth ?? DateTime.now(),
+                dates: state.calendar ?? [],
+                selectedDate: state.selectedDate ?? DateTime.now(),
+                onTapTitle: (DateTime dateTime) =>
+                    onAction(HomeAction.onTapTitle(dateTime)),
+                onTapPrevious: () => onAction(const HomeAction.onTapPrevious()),
+                onTapNext: () => onAction(const HomeAction.onTapNext()),
+                onTapDate: (DateTime dateTime) =>
+                    onAction(HomeAction.onTapDate(dateTime)),
+                onLongPressDate: (DateTime dateTime) =>
+                    onAction(HomeAction.onLongPressDate(dateTime)),
+              ),
+              DetailField(
+                title: Text(
+                  '다가오는 일정',
+                  style: AppTextStyle.subTitle1.copyWith(
+                    color: AppColor.black,
+                    fontWeight: FontWeight.bold,
                   ),
-                  children: [
-                    if (state.upcomingEvents.isNotEmpty)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ...state.upcomingEvents.map(
-                            (event) => UpcomingEventTile(event: event),
-                          ),
-                        ],
-                      )
-                    else
-                      Text(
-                        '다가오는 일정이 없어요!',
-                        style: AppTextStyle.body.copyWith(
-                          color: AppColor.grey,
-                        ),
-                      ),
-                  ],
                 ),
-              ],
-            ),
+                children: [
+                  if (state.upcomingEvents.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ...state.upcomingEvents.map(
+                          (event) => UpcomingEventTile(event: event),
+                        ),
+                      ],
+                    )
+                  else
+                    Text(
+                      '다가오는 일정이 없어요!',
+                      style: AppTextStyle.body.copyWith(
+                        color: AppColor.grey,
+                      ),
+                    ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
