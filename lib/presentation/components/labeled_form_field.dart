@@ -6,10 +6,18 @@ class LabeledFormInputField extends StatelessWidget {
     required this.label,
     required this.validator,
     super.key,
+    this.maxLines = 1,
+    this.editable = false,
+    this.hintText,
+    this.maxLength,
   });
 
   final Text label;
   final String? Function(String? value) validator;
+  final int maxLines;
+  final int? maxLength;
+  final bool editable;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +25,13 @@ class LabeledFormInputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 16,
       children: [
-        label,
-        FormInputField(validator: validator),
+        Row(children: [label, if (editable) const Icon(Icons.edit_sharp)]),
+        FormInputField(
+          maxLines: maxLines,
+          maxLength: maxLength,
+          validator: validator,
+          hintText: hintText,
+        ),
       ],
     );
   }
