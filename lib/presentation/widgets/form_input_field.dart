@@ -5,12 +5,14 @@ import 'package:planee/core/ui/app_text_style.dart';
 class FormInputField extends StatelessWidget {
   const FormInputField({
     required this.validator,
+    required this.controller,
     super.key,
     this.maxLines = 1,
     this.hintText,
     this.maxLength,
   });
 
+  final TextEditingController controller;
   final String? Function(String? value) validator;
   final int maxLines;
   final String? hintText;
@@ -19,6 +21,7 @@ class FormInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       maxLines: maxLines,
       maxLength: maxLength,
       decoration: InputDecoration(

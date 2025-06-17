@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
 import 'package:planee/domain/extension/date_time_extension.dart';
+import 'package:planee/presentation/components/app_form.dart';
 import 'package:planee/presentation/components/detail_field.dart';
+import 'package:planee/presentation/components/labeled_form_field.dart';
 import 'package:planee/presentation/components/time_picker.dart';
 import 'package:planee/presentation/screens/create_event/create_event_action.dart';
 import 'package:planee/presentation/screens/create_event/create_event_state.dart';
@@ -36,6 +38,8 @@ class CreateEventScreen extends StatelessWidget {
           style: AppTextStyle.subTitle1.copyWith(color: AppColor.black),
         ),
         centerTitle: true,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, size: 20),
           onPressed: () => context.pop(),
@@ -49,34 +53,41 @@ class CreateEventScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               spacing: 24,
               children: [
-                DetailField(
-                  title: Text(
-                    '제목',
-                    style: AppTextStyle.subTitle1.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  children: [
-                    Expanded(
-                      child: InputField(controller: titleController),
-                    ),
-                  ],
-                ),
-                DetailField(
-                  title: Text(
-                    '설명',
-                    style: AppTextStyle.subTitle1.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  children: [
-                    Expanded(
-                      child: InputField(
-                        controller: descriptionController,
-                        maxLines: 4,
+                AppForm(
+                  spacing: 16,
+                  fields: [
+                    LabeledFormInputField(
+                      label: Text(
+                        '제목',
+                        style: AppTextStyle.subTitle1.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
+                      hintText: '제목을 입력하세요.',
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return '제목을 입력해주세요.';
+                        }
+
+                        return null;
+                      },
+                    ),
+                    LabeledFormInputField(
+                      maxLines: 4,
+                      maxLength: 120,
+                      label: Text(
+                        '설명',
+                        style: AppTextStyle.subTitle1.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      hintText: '일정에 관련한 설명을 입력하세요.',
+                      validator: (String? value) {
+                        return null;
+                      },
                     ),
                   ],
+                  onSubmitted: () {},
                 ),
                 DetailField(
                   title: Text(
