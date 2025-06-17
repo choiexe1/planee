@@ -22,7 +22,12 @@ class CreateEventViewModel with ChangeNotifier {
   }
 
   void init(DateTime dateTime) {
-    _state = _state.copyWith(eventTime: dateTime);
+    final nowTime = TimeOfDay.now();
+
+    _state = _state.copyWith(
+      eventTime: dateTime,
+      timeOfDay: nowTime.replacing(minute: 0),
+    );
   }
 
   Future<void> _createEvent(
