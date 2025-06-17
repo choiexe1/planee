@@ -3,16 +3,27 @@ import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
 
 class FormInputField extends StatelessWidget {
-  const FormInputField({required this.validator, super.key, this.maxLines = 1});
+  const FormInputField({
+    required this.validator,
+    super.key,
+    this.maxLines = 1,
+    this.hintText,
+    this.maxLength,
+  });
 
   final String? Function(String? value) validator;
   final int maxLines;
+  final String? hintText;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       maxLines: maxLines,
+      maxLength: maxLength,
       decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: AppTextStyle.body.copyWith(color: AppColor.grey),
         filled: true,
         contentPadding: const EdgeInsets.all(16),
         fillColor: AppColor.input,
