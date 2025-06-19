@@ -213,6 +213,7 @@ class CreateEventScreen extends StatelessWidget {
                     CreateEventAction.saveEvent(
                       title: titleController.text,
                       description: descriptionController.text,
+                      location: locationController.text,
                     ),
                   );
                   context.pop();

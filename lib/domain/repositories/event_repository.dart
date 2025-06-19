@@ -3,7 +3,12 @@ import 'package:planee/domain/repositories/repository.dart';
 
 abstract interface class EventRepository
     implements Repository<EventEntity, int> {
-  Future<void> create(String title, String description, DateTime eventTime);
+  Future<void> create(
+    String title,
+    String description,
+    String location,
+    DateTime eventTime,
+  );
   Future<List<EventEntity>> findUpcomingEvents(
     DateTime start,
     DateTime end, {

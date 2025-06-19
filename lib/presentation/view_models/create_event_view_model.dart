@@ -14,8 +14,12 @@ class CreateEventViewModel with ChangeNotifier {
 
   Future<void> onAction(CreateEventAction action) async {
     switch (action) {
-      case SaveEvent(:final String title, :final String description):
-        await _createEvent(title, description);
+      case SaveEvent(
+        :final String title,
+        :final String description,
+        :final String location,
+      ):
+        await _createEvent(title, description, location);
       case ChangeTime(:final TimeOfDay timeOfDay):
         _changeTime(timeOfDay);
     }
@@ -33,11 +37,17 @@ class CreateEventViewModel with ChangeNotifier {
   Future<void> _createEvent(
     String title,
     String description,
+    String location,
   ) async {
     _state = _state.copyWith(isLoading: true);
     notifyListeners();
 
-    await _createEventUseCase.execute(title, description, _state.eventTime!);
+    await _createEventUseCase.execute(
+      title,
+      description,
+      location,
+      _state.eventTime!,
+    );
     notifyListeners();
   }
 

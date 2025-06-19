@@ -9,6 +9,7 @@ class EventDTO {
     required this.title,
     required this.description,
     required this.eventTime,
+    required this.location,
     this.id,
   }) : createdAt = DateTime.now();
 
@@ -20,6 +21,7 @@ class EventDTO {
   final int? id;
   final String title;
   final String description;
+  final String location;
   final DateTime eventTime;
   final DateTime createdAt;
 }

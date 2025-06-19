@@ -6,20 +6,21 @@ class EventEntity {
     required this.title,
     required this.description,
     required this.eventTime,
+    required this.location,
     required this.createdAt,
   });
 
   final int id;
   final String title;
   final String description;
+  final String location;
   final DateTime eventTime;
   final DateTime createdAt;
 
   @override
   String toString() {
     return '''
-    EventEntity{id: $id, title: $title, description: $description,
-    eventTime: $eventTime, createdAt: $createdAt}
+    EventEntity{id: $id, title: $title, description: $description, location: $location, eventTime: $eventTime, createdAt: $createdAt}
     ''';
   }
 
@@ -32,6 +33,7 @@ class EventEntity {
         other.title == title &&
         other.description == description &&
         other.eventTime == eventTime &&
+        other.location == location &&
         other.createdAt == createdAt;
   }
 
@@ -41,6 +43,7 @@ class EventEntity {
     title,
     description,
     eventTime,
+    location,
     createdAt,
   );
 
@@ -48,6 +51,7 @@ class EventEntity {
     int? id,
     String? title,
     String? description,
+    String? location,
     DateTime? eventTime,
     List<TagEntity>? tags,
     DateTime? createdAt,
@@ -58,6 +62,7 @@ class EventEntity {
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
+      location: location ?? this.location,
       eventTime: eventTime ?? this.eventTime,
       createdAt: createdAt ?? this.createdAt,
     );

@@ -8,6 +8,7 @@ extension EventMapper on EventDTO {
       description: description,
       id: id!,
       eventTime: eventTime,
+      location: location,
       createdAt: createdAt,
     );
   }

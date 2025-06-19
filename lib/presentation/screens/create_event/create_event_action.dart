@@ -8,6 +8,7 @@ sealed class CreateEventAction with _$CreateEventAction {
   const factory CreateEventAction.saveEvent({
     required String title,
     required String description,
+    required String location,
   }) = SaveEvent;
 
   const factory CreateEventAction.changeTime({

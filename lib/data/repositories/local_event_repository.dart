@@ -24,12 +24,14 @@ class LocalEventRepository implements EventRepository {
   Future<void> create(
     String title,
     String description,
+    String location,
     DateTime eventTime,
   ) async {
     final dto = EventDTO(
       title: title,
       description: description,
       eventTime: eventTime,
+      location: location,
     );
     await _dataSource.create(dto);
   }
