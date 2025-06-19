@@ -11,6 +11,10 @@ sealed class CreateEventAction with _$CreateEventAction {
     required String location,
   }) = SaveEvent;
 
+  const factory CreateEventAction.saveAlarmTime({
+    required Duration alarmTime,
+  }) = SaveAlarmTime;
+
   const factory CreateEventAction.changeTime({
     required TimeOfDay timeOfDay,
   }) = ChangeTime;

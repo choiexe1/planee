@@ -6,6 +6,7 @@ import 'package:planee/domain/extension/date_time_extension.dart';
 import 'package:planee/presentation/components/app_form.dart';
 import 'package:planee/presentation/components/detail_field.dart';
 import 'package:planee/presentation/components/labeled_form_field.dart';
+import 'package:planee/presentation/components/duration_picker.dart';
 import 'package:planee/presentation/components/time_picker.dart';
 import 'package:planee/presentation/screens/create_event/create_event_action.dart';
 import 'package:planee/presentation/screens/create_event/create_event_state.dart';
@@ -190,8 +191,40 @@ class CreateEventScreen extends StatelessWidget {
                     children: const [
                       BoxIcon(icon: Icon(Icons.notifications_outlined)),
                       SizedBox(width: 16),
-                      Text('15분 전 알람'),
+                      Text('일정 15분 전 알람'),
                     ],
+                    onTapEdit: () async {
+                      await showDialog<TimeOfDay>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text(
+                              '알람 시간 선택',
+                            ),
+                            content: SizedBox(
+                              child: DurationPicker(
+                                initialIndex: 0,
+                                items: const [
+                                  Duration(minutes: 1),
+                                  Duration(minutes: 5),
+                                  Duration(minutes: 10),
+                                  Duration(minutes: 15),
+                                  Duration(minutes: 30),
+                                  Duration(hours: 1),
+                                ],
+                                onTapDone: (Duration alarmTime) {
+                                  onAction(
+                                    CreateEventAction.saveAlarmTime(
+                                      alarmTime: alarmTime,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                   DetailField(
                     title: Text(

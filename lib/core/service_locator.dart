@@ -36,7 +36,7 @@ void injection() {
     )
     // View Models
     ..registerFactory<CreateEventViewModel>(
-      () => CreateEventViewModel(sl()),
+      () => CreateEventViewModel(sl(), sl()),
     )
     ..registerFactory<HomeViewModel>(
       () => HomeViewModel(sl()),

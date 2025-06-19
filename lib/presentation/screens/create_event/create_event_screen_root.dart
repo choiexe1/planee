@@ -44,6 +44,8 @@ class _CreateEventScreenRootState extends State<CreateEventScreenRoot> {
                 await widget.viewModel.onAction(action);
               case ChangeTime():
                 await widget.viewModel.onAction(action);
+              case SaveAlarmTime():
+                await widget.viewModel.onAction(action);
             }
           },
           titleController: titleController,
