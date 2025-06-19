@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:local_push_notifications_module/core/local_push_notifications_module.dart';
 import 'package:planee/core/db/sqlite_database.dart';
 import 'package:planee/data/data_sources/local_event_data_source.dart';
 import 'package:planee/data/repositories/local_event_repository.dart';
@@ -13,6 +14,9 @@ import 'package:sqflite/sqlite_api.dart';
 GetIt sl = GetIt.instance;
 
 void injection() {
+  // Moduels
+  LocalPushNotificationsModule.init(sl);
+
   sl
     ..registerSingletonAsync<Database>(
       () => SQLiteDatabase().init(),
