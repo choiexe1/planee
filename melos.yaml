@@ -1,0 +1,10 @@
+name: planee
+
+packages:
+  - ./
+  - modules/**
+
+scripts:
+  pub_get:
+    run: melos exec -- "flutter pub get"
+    description: Run flutter pub get in all packages
