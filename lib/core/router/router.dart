@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:planee/core/router/routes.dart';
 import 'package:planee/core/service_locator.dart';
+import 'package:planee/presentation/blocs/home_cubit.dart';
 import 'package:planee/presentation/screens/create_event/create_event_screen_root.dart';
 import 'package:planee/presentation/screens/home/home_screen_root.dart';
 import 'package:planee/presentation/view_models/create_event_view_model.dart';
-import 'package:planee/presentation/view_models/home_view_model.dart';
 
 GoRouter appRouter = GoRouter(
   initialLocation: Routes.home,
@@ -13,8 +14,10 @@ GoRouter appRouter = GoRouter(
     GoRoute(
       path: Routes.home,
       builder: (BuildContext context, GoRouterState state) {
-        final HomeViewModel viewModel = sl()..init();
-        return HomeScreenRoot(viewModel: viewModel);
+        return BlocProvider(
+          create: (context) => sl<HomeCubit>()..init(),
+          child: const HomeScreenRoot(),
+        );
       },
     ),
     GoRoute(
