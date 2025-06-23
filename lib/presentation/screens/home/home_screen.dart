@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
+import 'package:planee/domain/entities/event_entity.dart';
 import 'package:planee/presentation/components/calendar.dart';
 import 'package:planee/presentation/components/detail_field.dart';
 import 'package:planee/presentation/components/upcoming_event_tile.dart';
 import 'package:planee/presentation/screens/home/home_action.dart';
-import 'package:planee/presentation/screens/home/home_state.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({required this.state, required this.onAction, super.key});
+  const HomeScreen({
+    required this.currentDisplayMonth,
+    required this.calendarDates,
+    required this.selectedDate,
+    required this.upcomingEvents,
+    required this.onAction,
+    super.key,
+  });
 
-  final HomeState state;
+  final DateTime currentDisplayMonth;
+  final List<DateTime> calendarDates;
+  final DateTime selectedDate;
+  final List<EventEntity> upcomingEvents;
   final void Function(HomeAction action) onAction;
 
   @override
@@ -23,18 +33,15 @@ class HomeScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Calendar(
-                currentDisplayMonth:
-                    state.currentDisplayMonth ?? DateTime.now(),
-                dates: state.calendar ?? [],
-                selectedDate: state.selectedDate ?? DateTime.now(),
-                onTapTitle: (DateTime dateTime) =>
-                    onAction(HomeAction.onTapTitle(dateTime)),
-                onTapPrevious: () => onAction(const HomeAction.onTapPrevious()),
-                onTapNext: () => onAction(const HomeAction.onTapNext()),
-                onTapDate: (DateTime dateTime) =>
-                    onAction(HomeAction.onTapDate(dateTime)),
+                currentDisplayMonth: currentDisplayMonth,
+                dates: calendarDates,
+                onTapDate: (DateTime dateTime) => onAction(OnTapDate(dateTime)),
+                onTapPrevious: () => onAction(const OnTapPrevious()),
+                onTapNext: () => onAction(const OnTapNext()),
+                selectedDate: selectedDate,
                 onLongPressDate: (DateTime dateTime) =>
-                    onAction(HomeAction.onLongPressDate(dateTime)),
+                    onAction(OnLongPressDate(dateTime)),
+                onTapTitle: (dateTime) => onAction(OnTapTitle(dateTime)),
               ),
               DetailField(
                 title: Text(
@@ -45,11 +52,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 children: [
-                  if (state.upcomingEvents.isNotEmpty)
+                  if (upcomingEvents.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ...state.upcomingEvents.map(
+                        ...upcomingEvents.map(
                           (event) => UpcomingEventTile(event: event),
                         ),
                       ],
