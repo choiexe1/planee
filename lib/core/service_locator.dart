@@ -7,8 +7,8 @@ import 'package:planee/domain/data_sources/event_data_source.dart';
 import 'package:planee/domain/repositories/event_repository.dart';
 import 'package:planee/domain/use_cases/create_event_use_case.dart';
 import 'package:planee/domain/use_cases/find_upcoming_events_use_case.dart';
+import 'package:planee/presentation/blocs/create_event_cubit.dart';
 import 'package:planee/presentation/blocs/home_cubit.dart';
-import 'package:planee/presentation/view_models/create_event_view_model.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 GetIt sl = GetIt.instance;
@@ -34,10 +34,7 @@ void injection() {
     ..registerLazySingleton<FindUpcomingEventsUseCase>(
       () => FindUpcomingEventsUseCase(sl()),
     )
-    // View Models
-    ..registerFactory<CreateEventViewModel>(
-      () => CreateEventViewModel(sl(), sl()),
-    )
     // Cubits
-    ..registerFactory<HomeCubit>(() => HomeCubit(sl()));
+    ..registerFactory<HomeCubit>(() => HomeCubit(sl()))
+    ..registerFactory<CreateEventCubit>(() => CreateEventCubit(sl(), sl()));
 }

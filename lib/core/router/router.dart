@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:planee/core/router/routes.dart';
 import 'package:planee/core/service_locator.dart';
+import 'package:planee/presentation/blocs/create_event_cubit.dart';
 import 'package:planee/presentation/blocs/home_cubit.dart';
 import 'package:planee/presentation/screens/create_event/create_event_screen_root.dart';
 import 'package:planee/presentation/screens/home/home_screen_root.dart';
-import 'package:planee/presentation/view_models/create_event_view_model.dart';
 
 GoRouter appRouter = GoRouter(
   initialLocation: Routes.home,
@@ -26,9 +26,10 @@ GoRouter appRouter = GoRouter(
         final String dateString = state.pathParameters['date']!;
         final DateTime date = DateTime.parse(dateString);
 
-        final CreateEventViewModel viewModel = sl()..init(date);
-
-        return CreateEventScreenRoot(viewModel: viewModel, date: date);
+        return BlocProvider(
+          create: (context) => sl<CreateEventCubit>()..init(date),
+          child: CreateEventScreenRoot(date: date),
+        );
       },
     ),
   ],
