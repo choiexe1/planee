@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:planee/presentation/blocs/create_event_cubit.dart';
 import 'package:planee/presentation/screens/create_event/create_event_action.dart';
 import 'package:planee/presentation/screens/create_event/create_event_screen.dart';
-import 'package:planee/presentation/view_models/create_event_view_model.dart';
+import 'package:planee/presentation/screens/create_event/create_event_state.dart';
 
 class CreateEventScreenRoot extends StatefulWidget {
   const CreateEventScreenRoot({
-    required this.viewModel,
     required this.date,
     super.key,
   });
 
-  final CreateEventViewModel viewModel;
   final DateTime date;
 
   @override
@@ -32,20 +32,21 @@ class _CreateEventScreenRootState extends State<CreateEventScreenRoot> {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: widget.viewModel,
-      builder: (BuildContext context, Widget? child) {
+    final createEventCubit = context.read<CreateEventCubit>();
+
+    return BlocBuilder<CreateEventCubit, CreateEventState>(
+      builder: (context, state) {
         return CreateEventScreen(
-          state: widget.viewModel.state,
+          state: createEventCubit.state,
           date: widget.date,
           onAction: (CreateEventAction action) async {
             switch (action) {
               case SaveEvent():
-                await widget.viewModel.onAction(action);
+                await createEventCubit.onAction(action);
               case ChangeTime():
-                await widget.viewModel.onAction(action);
+                await createEventCubit.onAction(action);
               case SaveAlarmTime():
-                await widget.viewModel.onAction(action);
+                await createEventCubit.onAction(action);
             }
           },
           titleController: titleController,
