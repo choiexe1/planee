@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
   final List<DateTime> calendarDates;
   final DateTime selectedDate;
   final List<EventEntity> upcomingEvents;
-  final void Function(HomeEvent action) onAction;
+  final void Function(HomeEvent event) onAction;
 
   @override
   Widget build(BuildContext context) {
