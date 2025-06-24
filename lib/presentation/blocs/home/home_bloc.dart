@@ -14,11 +14,27 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeOnTapCalendarTitle>(_moveDate);
     on<HomeOnLongPressDate>(_dateLongPressed);
     on<HomeNavigationComplete>(_navigationComplete);
+    on<HomeReloadUpcomingEvents>(_reloadUpcomingEvents);
   }
 
   final FindUpcomingEventsUseCase _findUpcomingEventsUseCase;
 
   Future<void> _init(HomeInitialize event, Emitter<HomeState> emit) async {
+    final now = DateTime.now();
+
+    final upcomingEvents = await _findUpcomingEventsUseCase.execute(
+      start: DateTime(now.year, now.month, now.day, now.hour, now.minute),
+      end: DateTime(now.year, now.month, now.day + 1),
+      limit: 5,
+    );
+
+    emit(state.copyWith(upcomingEvents: upcomingEvents));
+  }
+
+  Future<void> _reloadUpcomingEvents(
+    HomeReloadUpcomingEvents event,
+    Emitter<HomeState> emit,
+  ) async {
     final now = DateTime.now();
 
     final upcomingEvents = await _findUpcomingEventsUseCase.execute(

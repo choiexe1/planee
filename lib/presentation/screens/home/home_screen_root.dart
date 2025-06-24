@@ -54,6 +54,8 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
                 throw UnimplementedError();
               case HomeNavigationComplete():
                 throw UnimplementedError();
+              case HomeReloadUpcomingEvents():
+                throw UnimplementedError();
             }
           },
         );

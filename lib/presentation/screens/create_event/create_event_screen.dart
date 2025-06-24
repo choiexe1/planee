@@ -3,18 +3,18 @@ import 'package:go_router/go_router.dart';
 import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
 import 'package:planee/domain/extension/date_time_extension.dart';
+import 'package:planee/presentation/blocs/create_event/create_event_event.dart';
 import 'package:planee/presentation/components/app_form.dart';
 import 'package:planee/presentation/components/detail_field.dart';
-import 'package:planee/presentation/components/labeled_form_field.dart';
 import 'package:planee/presentation/components/duration_picker.dart';
+import 'package:planee/presentation/components/labeled_form_field.dart';
 import 'package:planee/presentation/components/time_picker.dart';
-import 'package:planee/presentation/screens/create_event/create_event_action.dart';
-import 'package:planee/presentation/screens/create_event/create_event_state.dart';
 import 'package:planee/presentation/widgets/box_icon.dart';
 
 class CreateEventScreen extends StatelessWidget {
   const CreateEventScreen({
-    required this.state,
+    required this.eventTime,
+    required this.alarmTime,
     required this.titleController,
     required this.descriptionController,
     required this.locationController,
@@ -23,8 +23,9 @@ class CreateEventScreen extends StatelessWidget {
     super.key,
   });
 
-  final CreateEventState state;
-  final void Function(CreateEventAction action) onAction;
+  final DateTime eventTime;
+  final Duration alarmTime;
+  final void Function(CreateEventEvent event) onAction;
   final DateTime date;
   final TextEditingController titleController;
   final TextEditingController descriptionController;
@@ -126,11 +127,13 @@ class CreateEventScreen extends StatelessWidget {
                             content: IntrinsicHeight(
                               child: IntrinsicWidth(
                                 child: TimePicker(
-                                  initialTime: state.timeOfDay,
+                                  initialTime: TimeOfDay.fromDateTime(
+                                    eventTime,
+                                  ),
                                   onTapDone: (TimeOfDay timeOfDay) {
                                     onAction(
-                                      CreateEventAction.changeTime(
-                                        timeOfDay: timeOfDay,
+                                      CreateEventEvent.changeEventTime(
+                                        timeOfDay,
                                       ),
                                     );
                                   },
@@ -171,7 +174,7 @@ class CreateEventScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            state.timeOfDay.format(context),
+                            TimeOfDay.fromDateTime(eventTime).format(context),
                             style: AppTextStyle.caption.copyWith(
                               color: AppColor.grey,
                             ),
@@ -188,10 +191,10 @@ class CreateEventScreen extends StatelessWidget {
                       ),
                     ),
                     editable: true,
-                    children: const [
-                      BoxIcon(icon: Icon(Icons.notifications_outlined)),
-                      SizedBox(width: 16),
-                      Text('일정 15분 전 알람'),
+                    children: [
+                      const BoxIcon(icon: Icon(Icons.notifications_outlined)),
+                      const SizedBox(width: 16),
+                      Text('일정 ${alarmTime.inMinutes}분 전 알람'),
                     ],
                     onTapEdit: () async {
                       await showDialog<TimeOfDay>(
@@ -205,6 +208,7 @@ class CreateEventScreen extends StatelessWidget {
                               child: DurationPicker(
                                 initialIndex: 0,
                                 items: const [
+                                  // TODO: 추후에 1분짜리 지워야함
                                   Duration(minutes: 1),
                                   Duration(minutes: 5),
                                   Duration(minutes: 10),
@@ -214,9 +218,7 @@ class CreateEventScreen extends StatelessWidget {
                                 ],
                                 onTapDone: (Duration alarmTime) {
                                   onAction(
-                                    CreateEventAction.saveAlarmTime(
-                                      alarmTime: alarmTime,
-                                    ),
+                                    CreateEventEvent.saveAlarmTime(alarmTime),
                                   );
                                 },
                               ),
@@ -243,7 +245,7 @@ class CreateEventScreen extends StatelessWidget {
                 ],
                 onSubmitted: () {
                   onAction(
-                    CreateEventAction.saveEvent(
+                    CreateEventEvent.saveEvent(
                       title: titleController.text,
                       description: descriptionController.text,
                       location: locationController.text,

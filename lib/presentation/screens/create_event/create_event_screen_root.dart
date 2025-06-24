@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:planee/presentation/blocs/create_event_cubit.dart';
-import 'package:planee/presentation/screens/create_event/create_event_action.dart';
+import 'package:planee/presentation/blocs/create_event/create_event_bloc.dart';
+import 'package:planee/presentation/blocs/create_event/create_event_event.dart';
+import 'package:planee/presentation/blocs/create_event/create_event_state.dart';
+import 'package:planee/presentation/blocs/home/home_bloc.dart';
+import 'package:planee/presentation/blocs/home/home_event.dart';
 import 'package:planee/presentation/screens/create_event/create_event_screen.dart';
-import 'package:planee/presentation/screens/create_event/create_event_state.dart';
 
 class CreateEventScreenRoot extends StatefulWidget {
   const CreateEventScreenRoot({
@@ -32,21 +34,24 @@ class _CreateEventScreenRootState extends State<CreateEventScreenRoot> {
 
   @override
   Widget build(BuildContext context) {
-    final createEventCubit = context.read<CreateEventCubit>();
+    final createEventBloc = context.read<CreateEventBloc>();
+    final homeBloc = context.read<HomeBloc>();
 
-    return BlocBuilder<CreateEventCubit, CreateEventState>(
+    return BlocBuilder<CreateEventBloc, CreateEventState>(
       builder: (context, state) {
         return CreateEventScreen(
-          state: createEventCubit.state,
+          eventTime: state.eventTime,
+          alarmTime: state.alarmTime,
           date: widget.date,
-          onAction: (CreateEventAction action) async {
-            switch (action) {
-              case SaveEvent():
-                await createEventCubit.onAction(action);
-              case ChangeTime():
-                await createEventCubit.onAction(action);
-              case SaveAlarmTime():
-                await createEventCubit.onAction(action);
+          onAction: (CreateEventEvent event) async {
+            switch (event) {
+              case CreateEventChangeEventTime():
+                createEventBloc.add(event);
+              case CreateEventSaveAlarmTime():
+                createEventBloc.add(event);
+              case CreateEventSaveEvent():
+                createEventBloc.add(event);
+                homeBloc.add(const HomeReloadUpcomingEvents());
             }
           },
           titleController: titleController,

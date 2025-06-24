@@ -12,5 +12,6 @@ sealed class HomeEvent with _$HomeEvent {
       HomeOnLongPressDate;
   const factory HomeEvent.onTapTitle(DateTime dateTime) =
       HomeOnTapCalendarTitle;
+  const factory HomeEvent.reloadUpcomingEvents() = HomeReloadUpcomingEvents;
   const factory HomeEvent.navigationComplete() = HomeNavigationComplete;
 }
