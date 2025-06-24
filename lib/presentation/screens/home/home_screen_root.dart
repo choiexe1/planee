@@ -1,50 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:planee/core/router/routes.dart';
-import 'package:planee/domain/entities/event_entity.dart';
-import 'package:planee/presentation/blocs/home_cubit.dart';
+import 'package:planee/presentation/blocs/home/home_bloc.dart';
+import 'package:planee/presentation/blocs/home/home_event.dart';
 import 'package:planee/presentation/screens/home/home_action.dart';
 import 'package:planee/presentation/screens/home/home_screen.dart';
 import 'package:planee/presentation/screens/home/home_state.dart';
 
-class HomeScreenRoot extends StatelessWidget {
+class HomeScreenRoot extends StatefulWidget {
   const HomeScreenRoot({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final homeCubit = context.read<HomeCubit>();
+  State<HomeScreenRoot> createState() => _HomeScreenRootState();
+}
 
-    return BlocSelector<
-      HomeCubit,
-      HomeState,
-      (DateTime, List<DateTime>, DateTime, List<EventEntity>)
-    >(
-      selector: (state) => (
-        state.currentDisplayMonth ?? DateTime.now(),
-        state.calendar ?? [],
-        state.selectedDate ?? DateTime.now(),
-        state.upcomingEvents,
-      ),
-      builder: (context, props) {
+class _HomeScreenRootState extends State<HomeScreenRoot> {
+  late HomeBloc homeBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    homeBloc = context.read<HomeBloc>();
+    homeBloc.add(const HomeInitialize());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
         return HomeScreen(
-          currentDisplayMonth: props.$1,
-          calendarDates: props.$2,
-          selectedDate: props.$3,
-          upcomingEvents: props.$4,
-          onAction: (action) {
+          currentDisplayMonth: state.currentDisplayMonth,
+          calendarDates: state.calendar,
+          selectedDate: state.selectedDate,
+          upcomingEvents: state.upcomingEvents,
+          onAction: (action) async {
             switch (action) {
               case OnTapPrevious():
-                homeCubit.onAction(action);
+                homeBloc.add(const HomeOnTapPrevious());
               case OnTapNext():
-                homeCubit.onAction(action);
-              case OnTapDate():
-                homeCubit.onAction(action);
+                homeBloc.add(const HomeOnTapNext());
+              case OnTapDate(:final DateTime dateTime):
+                homeBloc.add(HomeOnTapDate(dateTime));
               case OnLongPressDate(:final DateTime dateTime):
-                context.push(Routes.createEventWithDate(dateTime));
-                homeCubit.onAction(action);
+              // await context.push(Routes.createEventWithDate(dateTime));
+              // await homeCubit.onAction(action);
+              // await homeCubit.refreshUpcomingEvents();
               case OnTapTitle():
-                homeCubit.onAction(action);
+              // await homeCubit.onAction(action);
             }
           },
         );
