@@ -37,7 +37,10 @@ class CreateEventScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           '일정 추가',
-          style: AppTextStyle.subTitle1.copyWith(color: AppColor.black),
+          style: AppTextStyle.subTitle1.copyWith(
+            color: AppColor.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
