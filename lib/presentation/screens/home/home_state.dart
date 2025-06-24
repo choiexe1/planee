@@ -10,6 +10,7 @@ abstract class HomeState with _$HomeState {
     required DateTime currentDisplayMonth,
     required List<DateTime> calendar,
     required DateTime selectedDate,
+    @Default('') String navigationTo,
     @Default(false) bool isLoading,
     @Default([]) List<EventEntity> upcomingEvents,
   }) = _HomeState;

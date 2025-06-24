@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:planee/core/ui/app_color.dart';
 import 'package:planee/core/ui/app_text_style.dart';
 import 'package:planee/domain/entities/event_entity.dart';
+import 'package:planee/presentation/blocs/home/home_event.dart';
 import 'package:planee/presentation/components/calendar.dart';
 import 'package:planee/presentation/components/detail_field.dart';
 import 'package:planee/presentation/components/upcoming_event_tile.dart';
-import 'package:planee/presentation/screens/home/home_action.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
   final List<DateTime> calendarDates;
   final DateTime selectedDate;
   final List<EventEntity> upcomingEvents;
-  final void Function(HomeAction action) onAction;
+  final void Function(HomeEvent action) onAction;
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +35,15 @@ class HomeScreen extends StatelessWidget {
               Calendar(
                 currentDisplayMonth: currentDisplayMonth,
                 dates: calendarDates,
-                onTapDate: (DateTime dateTime) => onAction(OnTapDate(dateTime)),
-                onTapPrevious: () => onAction(const OnTapPrevious()),
-                onTapNext: () => onAction(const OnTapNext()),
+                onTapDate: (DateTime dateTime) =>
+                    onAction(HomeOnTapDate(dateTime)),
+                onTapPrevious: () => onAction(const HomeOnTapPrevious()),
+                onTapNext: () => onAction(const HomeOnTapNext()),
                 selectedDate: selectedDate,
                 onLongPressDate: (DateTime dateTime) =>
-                    onAction(OnLongPressDate(dateTime)),
-                onTapTitle: (dateTime) => onAction(OnTapTitle(dateTime)),
+                    onAction(HomeOnLongPressDate(dateTime)),
+                onTapTitle: (dateTime) =>
+                    onAction(HomeOnTapCalendarTitle(dateTime)),
               ),
               DetailField(
                 title: Text(

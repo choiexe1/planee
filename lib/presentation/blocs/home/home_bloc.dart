@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:planee/core/router/routes.dart';
 import 'package:planee/domain/extension/date_time_extension.dart';
 import 'package:planee/domain/use_cases/find_upcoming_events_use_case.dart';
 import 'package:planee/presentation/blocs/home/home_event.dart';
@@ -10,6 +11,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeOnTapNext>(_nextMonth);
     on<HomeOnTapPrevious>(_previousMonth);
     on<HomeOnTapDate>(_selectDate);
+    on<HomeOnTapCalendarTitle>(_moveDate);
+    on<HomeOnLongPressDate>(_dateLongPressed);
+    on<HomeNavigationComplete>(_navigationComplete);
   }
 
   final FindUpcomingEventsUseCase _findUpcomingEventsUseCase;
@@ -50,5 +54,31 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void _selectDate(HomeOnTapDate event, Emitter<HomeState> emit) {
     emit(state.copyWith(selectedDate: event.dateTime));
+  }
+
+  void _moveDate(HomeOnTapCalendarTitle event, Emitter<HomeState> emit) {
+    emit(
+      state.copyWith(
+        selectedDate: event.dateTime,
+        currentDisplayMonth: event.dateTime,
+        calendar: event.dateTime.calculateCalendarDates(),
+      ),
+    );
+  }
+
+  void _dateLongPressed(HomeOnLongPressDate event, Emitter<HomeState> emit) {
+    emit(
+      state.copyWith(
+        navigationTo: Routes.createEventWithDate(event.dateTime),
+        selectedDate: event.dateTime,
+      ),
+    );
+  }
+
+  void _navigationComplete(
+    HomeNavigationComplete event,
+    Emitter<HomeState> emit,
+  ) {
+    emit(state.copyWith(navigationTo: ''));
   }
 }

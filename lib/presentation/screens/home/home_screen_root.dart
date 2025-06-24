@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:planee/presentation/blocs/home/home_bloc.dart';
 import 'package:planee/presentation/blocs/home/home_event.dart';
-import 'package:planee/presentation/screens/home/home_action.dart';
 import 'package:planee/presentation/screens/home/home_screen.dart';
 import 'package:planee/presentation/screens/home/home_state.dart';
 
@@ -25,7 +25,13 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocConsumer<HomeBloc, HomeState>(
+      listener: (context, state) {
+        if (state.navigationTo.isNotEmpty) {
+          context.push(state.navigationTo);
+          homeBloc.add(const HomeNavigationComplete());
+        }
+      },
       builder: (context, state) {
         return HomeScreen(
           currentDisplayMonth: state.currentDisplayMonth,
@@ -34,18 +40,20 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
           upcomingEvents: state.upcomingEvents,
           onAction: (action) async {
             switch (action) {
-              case OnTapPrevious():
+              case HomeOnTapPrevious():
                 homeBloc.add(const HomeOnTapPrevious());
-              case OnTapNext():
+              case HomeOnTapNext():
                 homeBloc.add(const HomeOnTapNext());
-              case OnTapDate(:final DateTime dateTime):
+              case HomeOnTapDate(:final dateTime):
                 homeBloc.add(HomeOnTapDate(dateTime));
-              case OnLongPressDate(:final DateTime dateTime):
-              // await context.push(Routes.createEventWithDate(dateTime));
-              // await homeCubit.onAction(action);
-              // await homeCubit.refreshUpcomingEvents();
-              case OnTapTitle():
-              // await homeCubit.onAction(action);
+              case HomeOnLongPressDate(:final dateTime):
+                homeBloc.add(HomeOnLongPressDate(dateTime));
+              case HomeOnTapCalendarTitle(:final dateTime):
+                homeBloc.add(HomeOnTapCalendarTitle(dateTime));
+              case HomeInitialize():
+                throw UnimplementedError();
+              case HomeNavigationComplete():
+                throw UnimplementedError();
             }
           },
         );
