@@ -50,22 +50,39 @@ class Calendar extends StatelessWidget {
 
                   DateTime tempSelectedDateTime = DateTime.now();
 
-                  final DateTime? selectedDt =
-                      await showModalBottomSheet<DateTime>(
-                        context: context,
-                        builder: (BuildContext builderContext) {
-                          return SizedBox(
-                            height:
-                                MediaQuery.of(builderContext).size.height / 2.5,
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 8,
+                  final DateTime?
+                  selectedDt = await showModalBottomSheet<DateTime>(
+                    context: context,
+                    builder: (BuildContext builderContext) {
+                      return SizedBox(
+                        height: MediaQuery.of(builderContext).size.height / 2.5,
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              alignment: Alignment.centerRight,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(
+                                        builderContext,
+                                        DateTime.now(),
+                                      );
+                                    },
+                                    child: Text(
+                                      '오늘',
+                                      style: AppTextStyle.subTitle2.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColor.blue,
+                                      ),
+                                    ),
                                   ),
-                                  alignment: Alignment.centerRight,
-                                  child: TextButton(
+                                  TextButton(
                                     onPressed: () {
                                       Navigator.pop(
                                         builderContext,
@@ -80,42 +97,44 @@ class Calendar extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: StatefulBuilder(
-                                    builder:
-                                        (
-                                          BuildContext innerContext,
-                                          StateSetter innerSetState,
-                                        ) {
-                                          return YearMonthPicker(
-                                            initialDate: DateTime(
-                                              selectedDate.year,
-                                              selectedDate.month,
-                                            ),
-                                            firstDate: DateTime(
-                                              selectedDate.year - 5,
-                                            ),
-                                            lastDate: DateTime(
-                                              selectedDate.year + 5,
-                                              12,
-                                              31,
-                                            ),
-                                            onDateTimeChanged: (DateTime dt) {
-                                              innerSetState(
-                                                () => tempSelectedDateTime = dt,
-                                              );
-                                              tempSelectedDateTime = dt;
-                                            },
-                                          );
-                                        },
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          );
-                        },
+                            Expanded(
+                              child: StatefulBuilder(
+                                builder:
+                                    (
+                                      BuildContext innerContext,
+                                      StateSetter innerSetState,
+                                    ) {
+                                      return YearMonthPicker(
+                                        initialDate: DateTime(
+                                          selectedDate.year,
+                                          selectedDate.month,
+                                        ),
+                                        firstDate: DateTime(
+                                          selectedDate.year - 5,
+                                        ),
+                                        lastDate: DateTime(
+                                          selectedDate.year + 5,
+                                          12,
+                                          31,
+                                        ),
+                                        onDateTimeChanged: (DateTime dt) {
+                                          innerSetState(
+                                            () => tempSelectedDateTime = dt,
+                                          );
+                                          tempSelectedDateTime = dt;
+                                        },
+                                      );
+                                    },
+                              ),
+                            ),
+                          ],
+                        ),
                       );
+                    },
+                  );
 
                   if (selectedDt != null) {
                     onTapTitle(selectedDt);
