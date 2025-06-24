@@ -3,7 +3,7 @@ import 'package:planee/core/router/routes.dart';
 import 'package:planee/domain/extension/date_time_extension.dart';
 import 'package:planee/domain/use_cases/find_upcoming_events_use_case.dart';
 import 'package:planee/presentation/blocs/home/home_event.dart';
-import 'package:planee/presentation/screens/home/home_state.dart';
+import 'package:planee/presentation/blocs/home/home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(this._findUpcomingEventsUseCase) : super(HomeState.init()) {
