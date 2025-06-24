@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:planee/presentation/blocs/home/home_bloc.dart';
 import 'package:planee/presentation/blocs/home/home_event.dart';
+import 'package:planee/presentation/blocs/home/home_state.dart';
 import 'package:planee/presentation/screens/home/home_screen.dart';
-import 'package:planee/presentation/screens/home/home_state.dart';
 
 class HomeScreenRoot extends StatefulWidget {
   const HomeScreenRoot({super.key});
@@ -38,8 +38,8 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
           calendarDates: state.calendar,
           selectedDate: state.selectedDate,
           upcomingEvents: state.upcomingEvents,
-          onAction: (action) async {
-            switch (action) {
+          onAction: (event) async {
+            switch (event) {
               case HomeOnTapPrevious():
                 homeBloc.add(const HomeOnTapPrevious());
               case HomeOnTapNext():
