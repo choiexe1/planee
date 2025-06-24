@@ -69,6 +69,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void _dateLongPressed(HomeOnLongPressDate event, Emitter<HomeState> emit) {
     emit(
       state.copyWith(
+        currentDisplayMonth: event.dateTime,
+        calendar: event.dateTime.calculateCalendarDates(),
         navigationTo: Routes.createEventWithDate(event.dateTime),
         selectedDate: event.dateTime,
       ),
