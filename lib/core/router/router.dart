@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:planee/core/router/routes.dart';
 import 'package:planee/core/service_locator.dart';
 import 'package:planee/presentation/blocs/create_event_cubit.dart';
-import 'package:planee/presentation/blocs/home_cubit.dart';
+import 'package:planee/presentation/blocs/home/home_bloc.dart';
 import 'package:planee/presentation/screens/create_event/create_event_screen_root.dart';
 import 'package:planee/presentation/screens/home/home_screen_root.dart';
 
@@ -15,7 +15,7 @@ GoRouter appRouter = GoRouter(
       path: Routes.home,
       builder: (BuildContext context, GoRouterState state) {
         return BlocProvider(
-          create: (context) => sl<HomeCubit>()..init(),
+          create: (context) => sl<HomeBloc>(),
           child: const HomeScreenRoot(),
         );
       },
