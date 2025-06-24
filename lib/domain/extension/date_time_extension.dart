@@ -71,7 +71,7 @@ extension DateTimeExtension on DateTime {
 
   /// [week]에 따라 계산할 범위가 정해진다. 불변 리스트 형태로 반환된다.
   /// example: calendarDates(5)는 5주간의 날짜(7 * 5)를 계산한다.
-  List<DateTime> calculateCalendarDates(int week) {
+  List<DateTime> calculateCalendarDates({int week = 5}) {
     final dateLength = week * 7;
 
     final int daysToSubtract = firstWeekDayOfMonth % 7;
