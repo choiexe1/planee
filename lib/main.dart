@@ -25,6 +25,8 @@ class App extends StatelessWidget {
       ],
       child: MaterialApp.router(
         theme: ThemeData(
+          splashFactory: NoSplash.splashFactory,
+          highlightColor: Colors.transparent,
           scaffoldBackgroundColor: AppColor.white,
           appBarTheme: const AppBarTheme(backgroundColor: AppColor.white),
         ),
